@@ -23,9 +23,7 @@ function MeetupDetails(props) {
 
 export async function getStaticPaths(context) {
   // get data
-  const client = await MongoClient.connect(
-    "mongodb+srv://jason:jasonbase@nodeexpressapi.5xkbz.mongodb.net/events?retryWrites=true&w=majority"
-  );
+  const client = await MongoClient.connect(process.env.DB_URI);
   const db = client.db();
   const eventsColletion = db.collection("meetups");
   const events = await eventsColletion.find({}, { _id: 1 }).toArray(); // gets only ids of data
@@ -44,9 +42,7 @@ export async function getStaticPaths(context) {
 export async function getStaticProps(context) {
   // get data for single event
   const meetupId = context.params.meetupId; // get dynamic event id from URL
-  const client = await MongoClient.connect(
-    "mongodb+srv://jason:jasonbase@nodeexpressapi.5xkbz.mongodb.net/events?retryWrites=true&w=majority"
-  );
+  const client = await MongoClient.connect(process.env.DB_URI);
   const db = client.db();
   const eventsColletion = db.collection("meetups");
   const selectedEvent = await eventsColletion.findOne({

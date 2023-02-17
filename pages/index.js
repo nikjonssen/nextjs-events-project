@@ -18,9 +18,7 @@ function HomePage(props) {
 
 export async function getStaticProps() {
   // fetch data from API
-  const client = await MongoClient.connect(
-    "mongodb+srv://jason:jasonbase@nodeexpressapi.5xkbz.mongodb.net/events?retryWrites=true&w=majority"
-  );
+  const client = await MongoClient.connect(process.env.DB_URI);
   const db = client.db();
   const eventsColletion = db.collection("meetups");
   const events = await eventsColletion.find().toArray();

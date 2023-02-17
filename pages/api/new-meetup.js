@@ -5,9 +5,7 @@ async function handler(req, res) {
   if (req.method === "POST") {
     // can use try/catch block for the whole configuration
     const data = req.body;
-    const client = await MongoClient.connect(
-      "mongodb+srv://jason:jasonbase@nodeexpressapi.5xkbz.mongodb.net/events?retryWrites=true&w=majority"
-    );
+    const client = await MongoClient.connect(process.env.DB_URI);
     const db = client.db();
     const eventsColletion = db.collection("meetups");
     const result = await eventsColletion.insertOne(data);
